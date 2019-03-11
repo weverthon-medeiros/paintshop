@@ -2,7 +2,7 @@ package my.challenge.paintshop;
 
 import my.challenge.paintshop.exceptions.InvalidParameterException;
 
-import static my.challenge.paintshop.util.Constants.GLOSSY;
+import static my.challenge.paintshop.util.Constants.GLOSS;
 import static my.challenge.paintshop.util.Constants.MATTE;
 
 import java.util.ArrayList;
@@ -14,14 +14,14 @@ import java.util.List;
 public class Customer {
 
     private Integer matteOption;
-    private List<Integer> glossyOptions;
+    private List<Integer> glossOptions;
 
     /**
      * Instantiate the {@code glassOptions} with the numOfColors (the worst case)
      * @param numColors number of colors for the customer
      */
     public Customer(int numColors) {
-        glossyOptions = new ArrayList<>(numColors);
+        glossOptions = new ArrayList<>(numColors);
     }
 
     /**
@@ -30,14 +30,14 @@ public class Customer {
      * Otherwise will be stored in a {code List}
      *
      * @param color the number of the color
-     * @param finish the type of finish: MATTE or GLOSSY
+     * @param finish the type of finish: MATTE or GLOSS
      * @throws InvalidParameterException
      */
     public void addColor(Integer color, char finish) throws InvalidParameterException {
         if(MATTE == finish) {
             matteOption = getColorIndex(color);
         } else {
-            glossyOptions.add(getColorIndex(color));
+            glossOptions.add(getColorIndex(color));
         }
     }
 
@@ -70,7 +70,7 @@ public class Customer {
         if(matteOption != null && MATTE == colors[matteOption]) {
             return true;
         } else {
-            return glossyOptions.stream().anyMatch(color -> GLOSSY == colors[color]);
+            return glossOptions.stream().anyMatch(color -> GLOSS == colors[color]);
         }
     }
 

@@ -79,7 +79,7 @@ public class PaintShop {
     /**
      * Mixes the colors. The process
      * <ol>
-     *     <li>Starts with all colors as GLOSSY</li>
+     *     <li>Starts with all colors as GLOSS</li>
      *     <li>Iterates over customer and check if they are happy</li>
      *     <li>When a customer is not happy: <br />
      *         <ol>
@@ -93,7 +93,7 @@ public class PaintShop {
      */
     public String mixColors() {
         char[] finalColors = getInitialMixColors(numColors);
-
+        boolean isNoSolution = false;
         for (int i = 0; i < customers.size(); i++) {
             Customer customer = customers.get(i);
             if(!customer.isHappy(finalColors)) {
@@ -102,24 +102,24 @@ public class PaintShop {
                     //Restart the customer to analise if the change affected another customer
                     i = -1;
                 } else {
-                    finalColors = null;
+                    isNoSolution = true;
                     break;
                 }
             }
         }
 
-        return printResult(finalColors);
+        return printResult(finalColors, isNoSolution);
     }
 
     /**
-     * Instantiates the initial {@code array} of colors, all colors will have GLOSSY for now.
+     * Instantiates the initial {@code array} of colors, all colors will have GLOSS for now.
      *
      * @param numColors defines the length of the {@code array}
      * @return the initial {@code array}
      */
     private static char[] getInitialMixColors(int numColors) {
         char[] finalColors = new char[numColors];
-        Arrays.fill(finalColors, GLOSSY);
+        Arrays.fill(finalColors, GLOSS);
         return finalColors;
     }
 
@@ -132,8 +132,8 @@ public class PaintShop {
      * @param finalColors
      * @return the mix result
      */
-    private String printResult(char[] finalColors) {
-        if(finalColors == null) {
+    private String printResult(char[] finalColors, boolean isNoSolution) {
+        if(isNoSolution) {
             return NO_SOLUTION;
         } else {
             StringBuilder sb = new StringBuilder();
